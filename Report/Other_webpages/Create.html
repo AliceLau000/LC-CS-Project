@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <link href = "Decoration.css" rel = "stylesheet">
+        <meta name = "Description" content = "This is my create!">
+    </head>
+    <body>
+        <ul class="fix_nav">
+            <li><a href="../index.html">Brief</a></li>
+            <li><a href="Investigation.html">Investigation</a></li>
+            <li><a href="Plan_and_Design.html">Plan & Design</a></li>
+            <li><a href="Create.html">Create</a></li>
+            <li><a href="Evaluation.html">Evaluation</a></li>
+            <li><a href="Reference.html">Reference</a></li>
+            <li><a href="Word_Count.html">Word Count</a></li>
+        </ul>
+        <div class="container">
+            <div class="left_sidebar">
+                
+            </div>
+            <div class="main_content">
+                <h1 class="section_title">4. Create</h1>
+                <h3 class="section_small_title">4.1 Key Milestones</h3>
+                <b><p style="text-align: left;">V1: Investigation and Initial prototype (03/12/2025 - 30/01/2026)</p></b>
+                <ul class="normal_list">
+                    <li>Researched wildfire monitoring systems and decided on the project idea</li>
+                    <li>Experimented with Makecode blocks to understand Micro:bit</li>
+                    <li>Built a basic system where sensor data from Micro:bit was sent to the computer and stored in CSV files</li>
+                    <div style="display: flex; justify-content: center; width:100%">
+                        <img src="Create_Media/Photos of 4.1/V1_Datacollection.png" alt="# Show data of micro:bit data on Makecode website" width="40%" style="display:inline; flex:1; margin-top: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V1_Datalogger.png" alt="# Datalogger website" width="40%" style="display:inline; flex:1; margin-top: 10px;">
+                    </div>
+                    <img src="Create_Media/Photos of 4.1/V1_Dataascsv.png" alt="# Collected data in CSV File in excel" width="50%" style="margin-bottom: 10px">   
+                    <li>Modified my system so the Micro:bit displays different fire risk icons depending on real-world temperature and light intensity values.</li>
+                    <div style="display: flex; justify-content: center; width:100%">
+                        <img src="Create_Media/Photos of 4.1/V1_normal_risk.jpg" alt="# Micro:bit on desk (displaying small fire icon)" width="20%" style="display:inline; flex:1; margin-top: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V1_high_risk_lamp.jpg" alt="# Micro:bit under bright lamp (displaying big fire icon)" width="20%" style="display:inline; flex:1; margin-top: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V1_high_risk_heater.jpg" alt="# Micro:bit on heater (displaying big fire icon)" width="20%" style="display:inline; flex:1; margin-top: 10px;">
+                    </div>
+                </ul>
+                <b><p style="text-align:left; margin-top: 25px;">V2: Simulation Model Development (01/02/2026 - 22/02/2026)</p></b>
+                <ul class="normal_list">
+                    <li>Started building the wildfire risk model in Python using CSV sensor data</li>
+                    <div style="display: flex; justify-content: center; width:100%">
+                        <img src="Create_Media/Photos of 4.1/V2_First_Version_Model.png" alt="# Code of First version Model" width="55%" height="300px" style="display:inline; flex:1; margin-top: 10px; margin-bottom: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V2_First_Version_Model_Outputs.png" alt="# Output of First version Model" width="20%" height="400px" style="display:inline; flex:1; margin-top: 10px;">
+                    </div>
+                    <li>Ran some what-if simulations to test my initial model</li>
+                    <div style="display: flex; justify-content: center; width:100%">
+                        <img src="Create_Media/Photos of 4.1/V2_First_Version_what_if.png" alt="# Code to run First version model what-ifs" width="40%" style="display:inline; flex:1; margin-top: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V2_First_Version_what_if_final_results.png" alt="# First version model what-if outputs" width="40%" style="display:inline; flex:1; margin-top: 10px;">
+                    </div>
+                    <div style="display: flex; justify-content: center; width:100%">
+                        <img src="Create_Media/Photos of 4.1/V2_First_Version_what_if_1_results.png" alt="# First version Model what-if 1 results in a graph" width="40%" style="display:inline; flex:1; margin-bottom: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V2_First_Version_what_if_2_results.png" alt="# First version Model what-if 2 results in a graph" width="40%" style="display:inline; flex:1; margin-bottom: 10px;">
+                    </div>
+                    <li>Redesigned my model and visualization structure to make it easier to implement the adaptive sprinkler system later</li>
+                    <li> Started building <b>NEW</b> wildfire risk and spread simulation model using CSV sensor data</li>
+                    <li> Created a forest grid with different vegetation</li>
+                    <div style="display: flex; justify-content: center; width:100%">
+                        <img src="Create_Media/Photos of 4.1/V2_Second_Model_first_attempt.png" alt="# Code for second model attempt (initialisation)" width="40%" style="display:inline; flex:1; margin-top: 10px; margin-bottom: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V2_Second_Model_first_attempt_output.png" alt="# Output for second model attempt (initialisation)" width="40%" style="display:inline; flex:1; margin-top: 10px; margin-bottom: 10px;">
+                    </div>
+                    <li>Developed the wildfire spread algorithm based on fire probability calculated from data in the CSV file</li>
+                    <li>Vegetation are now represented by ANSI Escape Codes</li>
+                    <div style="display: flex; justify-content: center; width:100%">
+                        <img src="Create_Media/Photos of 4.1/V2_ANSI_EscapeCode_Testing.png" alt="# Code to test ANSI Escape code to represent my forest" width="40%" style="display:inline; flex:1; margin-top: 10px; margin-bottom: 10px;">
+                        <img src="Create_Media/Photos of 4.1/V2_Second_Model_working.png" alt="# Model Output showing a burning Forest" width="40%" style="display:inline; flex:1; margin-top: 10px; margin-bottom: 10px;">
+                    </div>
+                </ul>
+                <b><p style="text-align:left; margin-top: 25px;">V3: Adaptive System Implementation (23/02/2026 - 27/02/2026)</p></b>
+                <ul class="normal_list">
+                    <li>Added the adaptive sprinkler system in my model</li>
+                    <img src="Create_Media/Photos of 4.1/V3_Adaptive_Working.png" alt="# Model Output showing a burning forest with a sprinkler system activating" width="40%" style="margin-top: 10px; margin-bottom: 10px;">
+                    <li>Tested and compared wildfire spread with and without adaptive sprinklers</li>
+                    <li>Recorded results and analysed differences between adaptive and non-adaptive scenarios</li>
+                    <img src="Create_Media/Photos of 4.1/V3_Adaptive_VS_Not.png" alt="# Comparison table (with and without adaptive system)" width="80%" style="margin-top:10px; margin-bottom: 10px;">
+                </ul>
+                <b><p style="text-align:left; margin-top: 25px;">V4: Testing and Finalisation (02/03/2026 - 17/03/2026)</p></b>
+                <ul class="normal_list">
+                    <li>Ran final testing for all simulation features</li>
+                    <li> Improved visualization, added a forest key at the bottom of my model</li>
+                    <img src="Create_Media/Photos of 4.1/V4_Forest_Key_Code.png" alt="# Code to print forest key" width="50%" style="margin-top:10px; margin-bottom: 10px;">
+                    <img src="Create_Media/Photos of 4.1/V4_Forest_Key_Display.png" alt="Forest key" width="40%" style="margin-top:10px; margin-bottom: 10px;">
+                    <li>Prepared artefact and report for submission</li>
+                </ul>
+                <h3 class="section_small_title">4.2 Testing that took place</h3>
+                <p style="text-align:left; margin-bottom:0px;">After building my embedded system, I carried out system tests to test BR3, making sure everything was working correctly. First I started my system by pressing button A and placed my micro:bit on my table. Then I placed my micro:bit directly under a bright lamp. Finally, I placed my micro:bit on a heater. The results of these tests are shown in the embedded system test case table below.</p>
+                <img class="center_img" src="Create_Media/4.2 Test Cases tables/Embedded_System_Testing.png" alt="# Embedded System test case table" width="70%" style="margin-top:0px;">
+                <p style="text-align:left;">I also carried out unit tests to ensure that each part of the algorithm in my model was working correctly. To do this, I created a separate Python testing file and wrote functions specifically designed to test each component of the model individually.</p>
+                <img src="Create_Media/4.2 Test Cases tables/1_test_csv_read().png" alt="# Python Code to test csv file reading" width="100%">
+                <img src="Create_Media/4.2 Test Cases tables/2_test_fire_probability().png" alt="# Python Code to test Fire probability calculation" width="100%">
+                <img src="Create_Media/4.2 Test Cases tables/3_test_count_fire_neighbours().png" alt="# Python Code to test fire neighbours counting" width="100%">
+                <img src="Create_Media/4.2 Test Cases tables/4_test_whole_forest_fire_risk().png" alt="# Python Code to test whole forest fire risk calculation" width="100%">
+                <img src="Create_Media/4.2 Test Cases tables/5_test_adaptive_sprinkler_activation().png" alt="# Python Code to test the activation of adaptive sprinkler system" width="100%">
+                <img src="Create_Media/4.2 Test Cases tables/6_test_fire_spread().png" alt="# Python Code to test fire spread" width="100%">
+                <div style="display: flex; justify-content: center; width:100%">
+                    <div width="50%">
+                        <img src="Create_Media/4.2 Test Cases tables/7_Run_Model_tests.png" alt="# Code to run all tests" width="100%">
+                        <p style="font-size:15px; margin-top: 0px;">(Run Tests)</p>
+                    </div>
+                    <div width="50%">
+                       <img src="Create_Media/4.2 Test Cases tables/8_Python_Test_Results.png" alt="# Testing Results" width="80%">
+                       <p style="font-size:15px; margin-top: 0px; margin-right:55px;">(All Tests passed)</p>
+                    </div>
+                </div>
+                <p style="text-align:center; margin-top:0px; margin-bottom:0px;">I summarised these results in the test case table below.</p>
+                <img class="center_img" src="Create_Media/4.2 Test Cases tables/Model_Test_Tables.png" alt="# Model unit tests test case table" width="65%">
+                <p style="text-align:left;">After completing all the unit tests, I ran a system test. This allows me to observe how different parts of my system worked together, including the fire spread behaviour and the adaptive sprinkler system.</p>
+                <img class="center_img" src="Create_Media/Photos of 4.1/V3_Adaptive_Working.png" alt="# Burning Forest with adaptive system on" width="40%">
+                <p style="font-size:15px; text-align: center;">⬆️ (My Model is working!)</p>
+                <p style="text-align:left;">I also compared the performance of the system with the adaptive sprinkler system enabled and with it disabled. This allowed me to observe the effect of the sprinkler system on fire spread.</p>
+                <div style="display: flex; justify-content: center; width:100%">
+                    <div width="50%">
+                        <img src="Create_Media/Photos of 4.1/V3_Not_Adaptive_Forest_Graph.png" alt="# Burn graph of Forest with no sprinkler system" width="100%">
+                        <p style="font-size:15px; margin-top: 0px;">(Graph of Forest <b>with no</b> sprinkler system)</p>
+                    </div>
+                    <div width="50%">
+                        <img src="Create_Media/Photos of 4.1/V3_Adaptive_Forest_Graph.png" alt="# Burn graph of Forest with sprinkler system" width="100%">
+                        <p style="font-size:15px; margin-top: 0px;">(Graph of Forest <b>with</b> sprinkler system)</p>
+                    </div>
+                </div>
+                <img class="center_img" src="Create_Media/Photos of 4.1/V3_Adaptive_VS_Not.png" alt="# Comparison Table (with and without adaptive system)" width="80%" style="margin-top:10px; margin-bottom: 10px;">
+                <p style="text-align:left;">The results show that the adaptive sprinkler system helps reduce the number of trees burning per second. The burning time is longer when the adaptive sprinkler system is enabled because the sprinklers reduce the rate of fire spread, meaning the fire takes more simulation steps to completely burn through the forest. My model runs perfectly!</p>
+                <h3 class="section_small_title">4.3 A Problem that I encountered & How it was overcome</h3>
+                <p style="text-align:left;">When I was making my model, I had a problem with the user interface and visualization of the forest grid in the VS Code Terminal.</p>
+                <b><p style="text-align:left; margin-top: 25px; margin-bottom: 5px;">Problem:</p></b>
+                <ul class="normal_list">
+                    <li>Initially every time the simulation updated, the model would print a brand new 20x20 grid below the previous one.</li>
+                    <li>This causes the terminal to constantly scroll downward, making it impossible to track the fire progression visually.</li>
+                    <li>I had to manually scroll to the bottom of the terminal to see the current status of the fire or the 'Current Fire Risk' level.</li>
+                </ul>
+                <img src="Create_Media/Photos of 4.3/4_Problem_Code1.png" alt="# Old Code for printing forest" width="100%" style="margin-top: 5px;">
+                <img src="Create_Media/Photos of 4.3/4_Problem_Code2.png" alt="# Old Code for printing forest" width="100%" style="display:inline;">
+                <p style="font-size:15px; text-align: center; margin-top: 0px;">⬆️ (Old code for printing my forest)</p>
+                <img class="center_img" src="Create_Media/Photos of 4.3/4_Problem_Code_Output.png" alt="# Terminal Output: A lot of different time version of the forest" width="35%">
+                <p style="font-size:15px; text-align: center; margin-top: 5px;">⬆️ (Output: A lot of different forest in terminal)</p>
+                <b><p style="text-align:left; margin-top: 25px; margin-bottom: 5px;">How I dealed with the problem:</p></b>
+                <ul class="normal_list">
+                    <li>I overcome this by introducing the IPython.display library.</li>
+                    <li>I imported the clear_output function.</li>
+                    <li>I also downloaded the Jupyter Extension on python and added “#%%” to the beginning of my code, so I could press run cell and simulation runs in an interactive window.</li>
+                    <img src="Create_Media/Photos of 4.3/4_Problem_Fix_1.png" alt="# New Code to fix (Import new library...)" width="50%" style="margin-top:5px;">
+                    <p style="font-size:13px; margin-top: 0px; text-align: left; margin-bottom: 5px;">⬆️ (New Code)</p>
+                    <li>Inside the simulation loop, I added clear_output(wait=True) immediately before printing the updated grid.</li>
+                    <li>(wait=True) tells the computer to wait until the next grid is ready to be displayed before deleting the old one.</li>
+                    <img src="Create_Media/Photos of 4.3/4_Problem_Fix_2.png" alt="# New Code to fix (add clear_output(wait=True))" width="85%" style="margin-top:5px;">
+                    <p style="font-size:13px; margin-top: 0px; text-align: left; margin-bottom: 5px;">⬆️ (New Code)</p>
+                    <li>Now the output is a smooth animation.</li>
+                    <img src="Create_Media/Photos of 4.1/V3_Adaptive_Working.png" alt="# Now Simulation runs smoothly in interactive window" width="40%" style="margin-top:5px; margin-bottom:5px;">
+                </ul>
+                <h3 class="section_small_title">4.4 Model Description</h3>
+                <p>The algorithm of my wildfire risk and spread simulation system model can be described in 3 flowcharts.</p>
+                <div width="100%" style="display:flex; justify-content: center;">
+                    <img src="Create_Media/Photos of 4.4/4_4_System_Overview.png" alt="# Flowchart of the whole model overview" width="40%">
+                    <img src="Create_Media/Photos of 4.4/4_4_Update_Forest_Logic.png" alt="# Flowchart of update forest logic" width="55%" style="display:inline;">
+                </div>
+                <img class="center_img" src="Create_Media/Photos of 4.4/4_4_Adaptive_Logic.png" alt="# Flowchart of the adaptive sprinkler logic" width="50%">
+                <p style="margin-bottom:5px;">To verify the logic of my model, I ran <b>2 what-if scenarios</b>:</p>
+                <p style="margin-bottom:5px; margin-top:5px;">1. What if both temperature and light are <b>high</b>?</p>
+                <p style="margin-top:5px">2. What if both temperature and light are <b>low</b>?</p>
+                <div style="display: flex; justify-content: center; width:100%">
+                    <div width="50%">
+                        <img class="center_img" src="Create_Media/Photos of 4.4/4_4_run_whatif1.png" alt="# Code to run what-if 1" width="50%" style="margin-bottom:3px;">
+                        <img class="center_img" src="Create_Media/Photos of 4.4/4_4_Forest_After_whatif1.png" alt="# Forest after what-if 1" width="70%" style="margin-bottom:0px">
+                        <p style="font-size:15px; margin-top: 0px;">(Forest After what-if 1)</p>
+                    </div>
+                    <div width="50%">
+                        <img class="center_img" src="Create_Media/Photos of 4.4/4_4_run_whatif2.png" alt="# Code to run what-if 2" width="50%" style="margin-bottom:3px;">
+                        <img class="center_img" src="Create_Media/Photos of 4.4/4_4_Forest_After_whatif2.png" alt="# Forest after what-if 2" width="70%" style="margin-bottom:0px">
+                        <p style="font-size:15px; margin-top: 0px;">(Forest After what-if 2)</p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; width:100%">
+                    <div width="50%">
+                        <img src="Create_Media/Photos of 4.4/4_4_what_if_high_graph.png" alt="Burn graph for what-if 1" width="100%">
+                        <p style="font-size:15px; margin-top: 0px;">(What-if 1)</p>
+                    </div>
+                    <div width="50%">
+                        <img src="Create_Media/Photos of 4.4/4_4_what_if_low_graph.png" alt="Burn graph for what-if 2" width="100%">
+                        <p style="font-size:15px; margin-top: 0px;">(What-if 2)</p>
+                    </div>
+                </div>
+                <p style="margin-top:5px; margin-bottom:5px;">Here are the results summarised in a table:</p>
+                <table style="margin-left:auto; margin-right:auto;">
+                    <tr>
+                        <th></th>
+                        <th>1. What if both temperature and light are high?</th>
+                        <th>2. What is both temperature and light are low?</th>
+                    </tr>
+                    <tr>
+                        <td>Highest risk</td>
+                        <td>Fatal</td>
+                        <td>Negligible</td>
+                    </tr>
+                    <tr>
+                        <td>Fire Spread</td>
+                        <td>Very Fast, damaged whole forest</td>
+                        <td>No spread, short duration</td>
+                    </tr>
+                    <tr>
+                        <td>Simulation Duration</td>
+                        <td>around 23s</td>
+                        <td>around 3s</td>
+                    </tr>
+                    <tr>
+                        <td>Intensity</td>
+                        <td>Big Strong Fires</td>
+                        <td>Small Tiny Fires</td>
+                    </tr>
+                </table>
+                <p style="margin-bottom:5px;">My model works as it is expected:</p>
+                <p style="margin-bottom:2px; margin-top:0px"><b>Higher temperature & Higher light → Burn faster bigger fire, Higher risk</b></p>
+                <p style="margin-top:2px"><b>Lower temperature & Lower light → Burn slower smaller fire, Smaller risk</b></p>
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="#" style="text-decoration: none; font-family: fantasy; color: #555;">↑ Return to Top of Section ↑</a>
+                </div>
+            </div>
+            <div class="right_sidebar">
+                
+            </div>
+        </div>
+    </body>
+</html>

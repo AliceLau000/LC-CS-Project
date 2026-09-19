@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <link href = "Decoration.css" rel = "stylesheet">
+        <meta name = "Description" content = "This is my Evaluation!">
+    </head>
+    <body>
+        <ul class="fix_nav">
+            <li><a href="../index.html">Brief</a></li>
+            <li><a href="Investigation.html">Investigation</a></li>
+            <li><a href="Plan_and_Design.html">Plan & Design</a></li>
+            <li><a href="Create.html">Create</a></li>
+            <li><a href="Evaluation.html">Evaluation</a></li>
+            <li><a href="Reference.html">Reference</a></li>
+            <li><a href="Word_Count.html">Word Count</a></li>
+        </ul>
+        <div class="container">
+            <div class="left_sidebar">
+
+            </div>
+            <div class="main_content">
+                <h1 class="section_title">5. Evaluation</h1>
+                <h3 class="section_small_title">5.1 Brief Checklist</h3>
+                <table style="margin-left: auto; margin-right: auto;">
+                    <tr>
+                        <th>Requirements</th>
+                        <th></th>
+                        <th>How I did this</th>
+                    </tr>
+                    <tr>
+                        <td><b>BR1: Embedded System Design</b></td>
+                        <td>✅</td>
+                        <td>I set up a Micro:bit to read temperature and light levels as soon as I press Button A</td>
+                    </tr>
+                    <tr>
+                        <td><b>BR2: Data Collection</b></td>
+                        <td>✅</td>
+                        <td>I used datalogger to record and saved all the sensor data.</td>
+                    </tr>
+                    <tr>
+                        <td><b>BR3: Process Simulation</b></td>
+                        <td>✅</td>
+                        <td>I made the Micro:bit show a fire icon when the temp and light levels got too high.</td>
+                    </tr>
+                    <tr>
+                        <td><b>AR1: Disaster Risk Modelling</b></td>
+                        <td>✅</td>
+                        <td>I made a model to predict fire spread and risk based on data using Python.</td>
+                    </tr>
+                    <tr>
+                        <td><b>AR2: What-if simulations</b></td>
+                        <td>✅</td>
+                        <td>I found that high temp and light caused the fire to destroy the forest quickly.</td>
+                    </tr>
+                    <tr>
+                        <td><b>AR3: Adaptive System</b></td>
+                        <td>✅</td>
+                        <td>I added an adaptive sprinkler system that changes and supress fire.</td>
+                    </tr>
+                </table>
+                <h3 class="section_small_title">5.2 Meeting end user's needs</h3>
+                <table style="margin-left:auto; margin-right:auto;">
+                    <tr>
+                        <th>Needs of End Users</th>
+                        <th></th>
+                        <th>How I did this</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul class="normal_list2">
+                                <p style="margin:5px; text-align:center;"><b>Students:</b></p>
+                                <li>User-friendly forest grid representation</li>
+                                <li>Burn rate graph</li><br/>
+                                <p style="margin: 5px; text-align:center;"><b>General Public:</b></p>
+                                <li>Colorful visualisation</li>
+                                <li>Easy to read fire risk icons</li>
+                                <li>simple interface</li>
+                            </ul>
+                        </td>
+                        <td>✅</td>
+                        <td>
+                            <div style="display: flex; justify-content: center; width:100%; align-items: flex-end;">
+                                <div width="50%">
+                                    <img src="Evaluation_Media/5_Colourful_Forest.png" alt="# Photo of my colourful forest grid" width="100%" style="display: block;">
+                                </div>
+                                <div width="50%">
+                                    <img src="Evaluation_Media/5_Graph.png" alt="# A Burn Graph" width="100%" style="display: block;">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul class="normal_list2">
+                                <p style="margin:5px; text-align:center;"><b>Researchers:</b></p>
+                                <li>Ability to input temperature and light intensity data</li>
+                            </ul>
+                        </td>
+                        <td>✅</td>
+                        <td>
+                            <div style="display: flex; justify-content: center; width:100%; align-items: center; flex-direction: column;">
+                                <a style="margin-right:5px; font-family: Arial; font-size:15px;">Researchers can hardcode different values to test behaviors</a>
+                                <img src="Evaluation_Media/5_Run_Forest.png" alt="# Code to run simulation" width="35%" style="display:block">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul class="normal_list2">
+                                <p style="margin:5px; text-align:center;"><b>Environment Policymakers:</b></p>
+                                <li>Allows testing of concepts</li> 
+                            </ul>
+                        </td>
+                        <td>✅</td>
+                        <td>
+                            <div style="display: flex; justify-content: center; align-items: center;" width="100%">
+                                <div style="width:60%">
+                                    <img class="center_img" src="Evaluation_Media/5_Adaptive.png" alt="# Forest with adaptive sprinkler on" width="75%">
+                                </div>
+                                <div style="width: 40%; display: flex; justify-content: center;">
+                                    <a style="font-family: Arial; font-size:15px; text-align: left;">E.g. Sprinkler system</a> 
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <h3 class="section_small_title">5.3 How I would futher improve this project</h3>
+                <ol style="font-family:Arial;">
+                    <li>I would move away from guessing environmental variables. Now, my model assumes humidity based on temperature and light, but adding BME280 humidity sensor provides actual humidity data. This makes the ignition probability more accurate.</li>
+                    <li style="margin-top:7px;">I would change how the model handles the data. Instead of using the average values from the csv, I would make the model read through every single row. This way the simulation will react with real-time changes in the environment. This makes the forest response more dynamic.</li>
+                </ol>
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="#" style="text-decoration: none; font-family: fantasy; color: #555;">↑ Return to Top of Section ↑</a>
+                </div>
+            </div>
+            <div class="right_sidebar">
+                
+            </div>
+        </div>
+    </body>
+</html>

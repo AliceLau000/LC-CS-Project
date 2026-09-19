@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Acumin Pro Condensed';
+    src: url('AcuminProCond-Bold.woff2') format('woff2'),
+        url('AcuminProCond-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Acumin Pro Condensed';
+    src: url('AcuminProCond-Light.woff2') format('woff2'),
+        url('AcuminProCond-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Acumin Pro Condensed';
+    src: url('AcuminProCond-BoldItalic.woff2') format('woff2'),
+        url('AcuminProCond-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Acumin Pro Condensed';
+    src: url('AcuminProCond-LightItalic.woff2') format('woff2'),
+        url('AcuminProCond-LightItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+

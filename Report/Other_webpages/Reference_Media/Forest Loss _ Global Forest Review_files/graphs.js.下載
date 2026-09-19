@@ -1,0 +1,14 @@
+jQuery(document).ready(function($) {
+    if($(".graph-toggle-btn").length) {
+        $(".graph-toggle-btn").click(function(e) {
+            e.preventDefault();
+
+            $(this).parents('.graphs-js-wrapper').find('.graph-toggle-btn').removeClass('active');
+            $(this).addClass('active');
+
+            $(this).parents('.graphs-js-wrapper').find(".graph-toggle").hide();
+            var gID = $(this).attr('data-graph-id');
+            $(gID).fadeIn();
+        });
+    }
+});

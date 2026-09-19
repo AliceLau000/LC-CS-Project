@@ -1,0 +1,44 @@
+.map .section-map .smallmap {
+    height: 400px;
+}
+
+.map .map-timeframe { background-color: #00305f; color: #fff; font-size: 14px; height: auto; line-height: normal; margin: 0; padding: 3px 10px; position: absolute; left: 1.25rem; top: 1.25rem; z-index: 999; }
+.map-controls { position: relative; }
+.map-info-icon { background-color: #00305f; border: none; border-radius: 50%; color: #fff; display: block; font-size: 17px; font-weight: bold; height: 24px; position: absolute; right: 0; top: 6px; width: 24px; display:flex; align-items: center; justify-content: center;}
+.map-info-icon:hover,
+.map-info-icon:focus,
+.map-info-icon:active { background-color: #008b99 !important; }
+.map-controls .map-legend { margin-top: 0; }
+.map-controls .map-legend p { margin-top: 12px; }
+
+
+/* Icon Changes */
+
+#National-Forecast-Map .olAlphaImg + span.map-wind-text {
+    font-size: 1rem;
+    line-height: 43px;
+
+}
+
+#National-Forecast-Map .olAlphaImg + span  {
+    font-size: 1rem;
+    line-height: 26px;
+
+}
+
+@media only screen and (max-width: 600px) {
+
+#National-Forecast-Map #map { 
+        height: 450px !important; 
+    }
+
+    #National-Forecast-Map .map-controls {
+        margin-bottom:30px;
+    }
+    
+}
+
+@supports (-webkit-touch-callout: none) {
+  .map-info-icon { height: 33px;  }
+    
+}

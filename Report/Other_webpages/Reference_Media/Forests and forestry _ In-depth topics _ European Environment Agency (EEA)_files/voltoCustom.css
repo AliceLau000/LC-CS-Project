@@ -1,0 +1,190 @@
+/* Custom CSS fixes */
+.csl-entry {
+    word-wrap: break-word;
+}
+
+/* Warn editor when there is an empty link */
+.slate-editor-link.external > span:first-child > span > span[data-slate-length="0"]::before {
+  content: "Empty external link ";
+  color: red;
+}
+
+.slate-editor-link.internal  > span:first-child > span > span[data-slate-length="0"]::before {
+  content: "Empty internal link ";
+  color: red;
+}
+
+/*.column-grid .styled-item {
+margin-bottom: 2rem;
+} */
+
+/* remove top and bototm margin from column-grid that has items since they already have 2rem gap */
+.ui.grid.column-grid:has(.items) {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.ui.items > .item > .content {
+    padding-left: 2rem;
+}
+
+.item img.big {
+width: 64px !important;
+height: 64px !important;
+}
+
+img.me {
+    width: 100%;
+}
+.image-block-container.center {
+    display: block;
+}
+
+/* Fix metadata preview_image width in columns */
+.metadata.preview_image.image img {
+    width: 100%;
+}
+
+/* Fix for image size on enlarge https://www.eea.europa.eu/en/analysis/publications/healthy-seas-thriving-fisheries */
+.ui.modal.enlarge-modal.enlarge-embed-embed-content-static .content {
+    overflow: auto;
+   -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+}
+
+.ui.modal.enlarge-modal.enlarge-embed-embed-content-static .content img {
+    max-width: inherit !important;
+}
+
+@media (max-width:768px) {
+    .ui.modal.enlarge-modal.enlarge-embed-embed-content-static .content img {
+        width: auto;
+    }
+}
+@media (min-width:769px) {
+    .ui.modal.enlarge-modal.enlarge-embed-embed-content-static .content img {
+        height: auto;
+    }
+}
+
+/* END Fix for image size on enlarge */
+
+/* temporary fix for SVG display, refs #276923 */
+.block.image img {
+  width: 100% !important;
+  height: auto;
+}
+
+/* Remove border left on description block on PDF Report 
+   See: https://taskman.eionet.europa.eu/issues/259256#note-24
+*/
+.contenttype-report_pdf .eea.callout {
+    border-left: none;
+    padding: 0;
+}
+
+.contenttype-report_pdf #page-document > .styled-columnsBlock:first-of-type .content-box:before {
+    content: none;
+}
+
+.contenttype-report_pdf #page-document > .styled-columnsBlock:first-of-type .content-box-inner {
+    padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+}
+
+/* Hide "No results found." message from the "Listing" block https://taskman.eionet.europa.eu/issues/281481 */
+.emptyListing {
+    display: none;
+}
+
+/* Fixed report-navigation for the Navigation block found under "Additional files" tab in "Report (PDF)", https://taskman.eionet.europa.eu/issues/265522 */
+.context-navigation.report-navigation{
+    max-width: unset !important;
+}
+
+/*  Add custom style for report title, https://taskman.eionet.europa.eu/issues/265522 */
+span.report-title {
+    font-size: 18px;
+}
+
+@media (min-width:992px) and (max-width:1365px)  {
+    .has-side-nav .content-box::before,
+    .has-side-nav .full-width {
+        margin-left: -20px !important;
+        margin-right: auto;
+        left: initial;
+        right: initial;
+    }
+}
+@media (min-width:1366px) {
+    .has-side-nav .content-box::before,
+    .has-side-nav .full-width {
+        left: 72% !important;
+    }
+}
+
+.benchmark_level[class~='1'] {
+  --background-color: #006bb8;
+  --text-color: #fff;
+}
+
+.benchmark_level[class~='2'],
+.benchmark_level[class~='3'] {
+  --background-color: #47b3ff;
+}
+
+.benchmark_level[class~='4'],
+.benchmark_level[class~='5'] {
+  --background-color: #e7bc91;
+}
+
+.benchmark_level[class~='6'],
+.benchmark_level[class~='7'] {
+  --background-color: #8b5e34;
+  --text-color: #fff;
+}
+
+.benchmark_level[class~='8'],
+.benchmark_level[class~='9'] {
+  --background-color: #e6e6e6;
+  --text-color: #3d5265;
+}
+
+/* children of tabs should be max-width 900px unless they are cardsVisualization */
+.section-europe-environment-2025 #page-document .has--size--wide_width div[role="tabpanel"] > *:not(.cardsVisualization) {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* fix footnote links breaking outside of content area https://www.eea.europa.eu/en/europe-environment-2025/countries/austria */
+.footnotes-listing-block a {
+    word-break: break-word;
+}
+
+.content-box .item > .content a:not(.ui) {
+    text-decoration: underline;
+}
+
+.is-fullscreen .top.bar, 
+.is-fullscreen .main.bar .eight.computer:last-child,
+.is-fullscreen .stagingBanner,
+.is-fullscreen .breadcrumbs-home-item,
+.is-fullscreen .breadcrumbs-home-item + li .divider,
+.is-fullscreen .navigation_home,
+.is-fullscreen .context-navigation-list > .accordion-list-title,
+.is-fullscreen .accordion-list-title + .accordion-list-item,
+.is-fullscreen .level-0 > .accordion-list-title:first-child,
+.is-fullscreen .level-0 > .accordion-list-title:nth-last-child(-n + 2),
+.is-fullscreen .accordion-block,
+.is-fullscreen #footer {
+    display: none !important;
+}
+
+.is-fullscreen  .main.bar.transparency:before {
+    background: transparent;
+}
+
+@media print {
+    .eea-side-menu-wrapper {
+        display: none !important;
+    }
+}

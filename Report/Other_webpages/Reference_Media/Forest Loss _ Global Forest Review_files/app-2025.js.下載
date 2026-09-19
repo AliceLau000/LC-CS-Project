@@ -1,0 +1,322 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
+
+/* Globals */
+let baseChartConfig = null;
+let chartDataMap = null;
+let sections = null;
+
+/* Data prep */
+function prepChartInfo(data) {
+  return data.map((d) => ({
+    ...d,
+    value: d.value ? d.value.split(",").map((d) => d.trim()) : d.value,
+  }));
+}
+
+async function getBaseChartConfig(info) {
+  const baseCharts = d3.groups(info, (d) => d.base_chart).filter((d) => d[0]);
+
+  const baseChartPromises = baseCharts.map((d) =>
+    d3.json(
+      `https://public.flourish.studio/visualisation/${d[0]}/visualisation-object.json`
+    )
+  );
+  const baseChartData = await Promise.all(baseChartPromises);
+
+  const config = baseChartData.map((d, i) => [
+    baseCharts[i][0],
+    {
+      name: d.name,
+      template: d.template,
+      version: d.version,
+      // state: _.cloneDeep(d.state),
+      state: JSON.parse(JSON.stringify(d.state)),
+      // TODO This should be included - the ternary is just a safety measure in case there's none
+      // metadata: d.metadata ? _.cloneDeep(d.metadata) : null,
+      metadata: d.metadata ? JSON.parse(JSON.stringify(d.metadata)) : null,
+    },
+  ]);
+
+  return new Map(config);
+}
+
+function prepChartData(data) {
+  return d3.group(data, (d) => d.question_index);
+}
+
+/* API config mutations */
+function setFacet(facet, state) {
+  if (facet) state.state.facet_layout = "facets";
+}
+
+function parseForColNames(info, string) {
+  // If there's a string and there are {curly braces}
+  if (string && string.match(/{.+}/)) {
+    // Get the braces content and use them as variable names
+    // to retrieve their content (e.g. info["question"])
+    const variable = string.match(/[^{}]*(?=\})/g).filter((d) => d);
+    return variable.map((d) => info[d]).join(" ");
+  }
+  return string;
+}
+
+function setTitles(info, state) {
+  state.state.layout.title = parseForColNames(info, info.title);
+  state.state.layout.subtitle = parseForColNames(info, info.subtitle);
+}
+
+function setFooter(info, state) {
+  state.state.layout.footer_note = parseForColNames(info, info.footer);
+}
+
+function setAxisLabels(info, state) {
+  if (info.x_label) state.state.x.title = info.x_label;
+  if (info.y_label) state.state.y.title = info.y_label;
+}
+
+function setAxisMax(info, state) {
+  if (info.y_max) state.state.y.linear_max = info.y_max;
+  if (info.y_secondary_max) state.state.y2.linear_max = info.y_secondary_max;
+}
+
+function setLegend(info, state) {
+  if (!info.legend) return;
+
+  state.state.legend_mode = "on";
+  if (info.legend === "single") state.state.legend_filter_mode = "filter-in";
+  if (info.legend === "multi") state.state.legend_filter_mode = "filter-out";
+}
+
+function setColor(info, state) {
+  if (info.color_override)
+    state.state.color.categorical_custom_palette = info.color_override;
+}
+
+function mutateOptions(info, state) {
+  // Add bindings and data args if more to come.
+  setFacet(info.facet, state);
+  setTitles(info, state);
+  setAxisLabels(info, state);
+  setLegend(info, state);
+  setAxisMax(info, state);
+  setFooter(info, state);
+  setColor(info, state);
+}
+
+/* DOM build */
+function setActiveChart(parent, info) {
+  parent.select(".viz-base-chart").classed("active-chart", info.base_chart);
+  parent.select(".viz-direct-chart").classed("active-chart", info.direct_chart);
+}
+
+function buildAPIChart(info) {
+  // Compose the API options.
+  const config = baseChartConfig.get(info.base_chart);
+
+  const base = {
+    template: config.template,
+    version: config.version, // this comes from the pulled in base vis
+    api_key: "ibeisDkN0WvNvxeSbWLz0PKTAHPCksrufizuWLMUC6U-UlH2PekIv0jeq8yZUkhU",
+    container: `${info.container} .viz-base-chart`,
+    height: info.height,
+    // TODO will this be required to set when using metadata:
+    // base_visualisation_data_format: "object"
+  };
+
+  const state = {
+    // state: _.cloneDeep(config.state),
+    state: JSON.parse(JSON.stringify(config.state)),
+    // metadata: _.cloneDeep(config.metadata),
+    metadata: JSON.parse(JSON.stringify(config.metadata)),
+  };
+
+  const dataBindings = {
+    label: info.label,
+    value: info.value,
+  };
+
+  // These need to be only there if in use. Can't be null.
+  if (info.facet) dataBindings.facet = info.facet;
+  if (info.filter) dataBindings.filter = info.filter;
+
+  const bindings = {
+    bindings: {
+      data: dataBindings,
+    },
+  };
+
+  // Data (abstract away if more to come)
+  const chartData = chartDataMap.get(info.question_index);
+
+  const data = {
+    data: {
+      data: chartData,
+    },
+  };
+
+  mutateOptions(info, state);
+
+  const apiOptions = { ...base, ...state, ...bindings, ...data };
+
+  // Build the chart.
+  const currentSectionValue = sections.get(info.sub_section);
+  const hasVisual = currentSectionValue.hasOwnProperty("visual");
+
+  // Build initially, update later.
+  if (!hasVisual) {
+    // This mutates the section map's value.
+    currentSectionValue.visual = new Flourish.Live(apiOptions);
+  } else {
+    currentSectionValue.visual.update(apiOptions);
+  }
+}
+
+function buildDirectChart(info) {
+  const directChartContainer = d3.select(`${info.container} .viz-direct-chart`);
+
+  if (directChartContainer.selectAll("*").size()) return;
+
+  directChartContainer
+    .append("iframe")
+    .attr("src", `https://flo.uri.sh/visualisation/${info.direct_chart}/embed`)
+    .attr("title", "Interactive or visual content")
+    .attr("class", "flourish-embed-iframe")
+    .attr("frameborder", "0")
+    .attr("scrolling", "no")
+    .attr(
+      "sandbox",
+      "allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+    )
+    .style("width", "100%")
+    .style("height", info.height);
+}
+
+function buildVisual(info) {
+  // Check what type of chart to build.
+  if (info.base_chart) buildAPIChart(info);
+  if (info.direct_chart) buildDirectChart(info);
+  if (!info.base_chart && !info.direct_chart)
+    throw new Error(
+      "Please assign either a base_chart or a direct_chart visualization id"
+    );
+}
+
+function buildContols(sel, data) {
+  // sel.append('div').attr('class', 'viz-nav-title').html('View Chart:');
+  const sectionButtons = sel
+    .selectAll("chart-button")
+    .data(data)
+    .join("button")
+    .attr("class", "viz-nav-option")
+    .html((d) => d.question_label);
+
+  sectionButtons.filter(function (d, i) {
+    return d3.select(this).classed("selected", !i);
+  });
+
+  sectionButtons.on("click", function () {
+    // Button styles.
+    d3.select(this.parentNode)
+      .selectAll(".viz-nav-option")
+      .classed("selected", false);
+    const selected = d3.select(this).classed("selected");
+    d3.select(this).classed("selected", !selected);
+
+    // Build the chart.
+    const info = d3.select(this).datum();
+    buildVisual(info);
+
+    // Change chart visibility.
+    const parent = d3.select(this.closest(".df-viz"));
+    setActiveChart(parent, info);
+  });
+}
+
+function buildSection(infoData) {
+  const { container } = infoData[0];
+
+  // Build DOM.
+  const sectionContainer = d3
+    .select(container)
+    .append("div")
+    .attr("class", "df-viz");
+  sectionContainer
+    .append("div")
+    .attr("class", "viz-nav")
+    .call(buildContols, infoData);
+
+  const chartContainer = sectionContainer
+    .append("div")
+    .attr("class", "viz-chart");
+  chartContainer.append("div").attr("class", "viz-base-chart");
+  chartContainer.append("div").attr("class", "viz-direct-chart");
+
+  // Build first chart and set visibility.
+  buildVisual(infoData[0]);
+  setActiveChart(chartContainer, infoData[0]);
+}
+// ------------------------------
+function filterControlRows(info) {
+  // Get all chart ID's (`.chart-wrap` ID's)
+  const chartSelectors = d3
+    .selectAll(".chart-wrap")
+    .nodes()
+    .map((d) => `#${d.id}`);
+
+  // Error handle
+  if (chartSelectors.length === 0)
+    throw new Error(
+      `No chart containers found in your HTML. Make sure you have 
+      div's with a class of \`chart-wrap\` and an ID mirrored in 
+      your control sheet in your HTML.`
+    );
+
+  // Get only infor data rows that are matched by an ID in the HTML
+  const filteredInfo = info.filter((d) => {
+    const flag = chartSelectors.includes(d.container);
+    return flag;
+  });
+
+  // Error handle
+  if (filteredInfo.length === 0)
+    throw new Error("No container ID's found that match yoru HTML containers.");
+
+  return filteredInfo;
+}
+
+/* Main */
+async function ready(info, data) {
+  // Prepare chart data and turn into map.
+  chartDataMap = prepChartData(data);
+
+  // Filter control sheet down to only charts that are
+  // mirrored by ID's in the HTML and prep it.
+  const filteredInfo = filterControlRows(info);
+  const infoData = prepChartInfo(filteredInfo);
+
+  // Fetch all vis.jsons and store in a map.
+  baseChartConfig = await getBaseChartConfig(infoData);
+  sections = d3.group(infoData, (d) => {
+    return d.sub_section;
+  });
+
+  // Build sections.
+  sections.forEach(buildSection);
+}
+
+// Get data (with cache busting query parameter).
+const chartInfo = d3.csv(
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHe1hPoLiVbenrRzTCxA2bCAY6GoTLMgZ8ZmWwwjXNiRhILWSUbPHKsbcnkcetaQ/pub?gid=87210043&single=true&output=csv",
+  d3.autoType
+);
+const chartData = d3.csv(
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTixw__S659kmWL3pc4raIYio7-5rychFt-xD9fKJ14N36b22wcIJUUYU8G5Uf4Cw/pub?gid=246337751&single=true&output=csv",
+  d3.autoType
+);
+
+// Local data pull for testing.
+// const chartInfo = d3.csv("./data/control.csv", d3.autoType);
+// const chartData = d3.csv("./data/data.csv", d3.autoType);
+
+Promise.all([chartInfo, chartData]).then((res) => ready(res[0], res[1]));

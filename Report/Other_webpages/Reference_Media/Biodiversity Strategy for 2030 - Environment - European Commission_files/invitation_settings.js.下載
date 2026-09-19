@@ -1,0 +1,27 @@
+SurveyInvitation.load_invitation_settings_file_callback({
+    "defaults": {
+        "welcome": {
+            "translatable_hrefs": {
+                "ec-survey-pop-up-body-privacy-link": "https://ec.europa.eu/eusurvey/home/privacystatement?language=en",
+                "ec-survey-pop-up-body-button-participate-now": "https://ec.europa.eu/eusurvey/runner/DG_Environment_Content_Survey"
+            },
+            "css_file": "https://ec.europa.eu/wel/surveys/wr_survey03/data/invitation_settings/cem/mode_1/css/main.css",
+            "markup": "<div class='ecsi' id='ec-survey-pop-up'> <div class='ecsi-footer' id='ec-survey-pop-up-footer'></div> <div class='ecsi-header' id='ec-survey-pop-up-header'>         <div class='ecsi-title' id='ec-survey-pop-up-title'></div>         <div class='ecsi-close' id='ec-survey-pop-up-close'> <a class='ecsi-button-close' id='ec-survey-pop-up-button-close'></a> </div>     </div>     <div class='ecsi-body' id='ec-survey-pop-up-body'>         <div class='ecsi-body-main-text' id='ec-survey-pop-up-body-main-text'> </div>         <div class='ecsi-body-buttons' id='ec-survey-pop-up-body-buttons'> <div id='ecsi-body-button-participate-now-wrapper' class='disabled'><a class='ecsi-body-button-participate-now' id='ec-survey-pop-up-body-button-participate-now' target='_blank'></a></div> <a class='ecsi-body-button-do-not-participate' id='ec-survey-pop-up-body-button-do-not-participate'></a> </div>         <div class='ecsi-body-checkbox'> <input type='checkbox' class='ecsi-checkbox' id='ec-survey-pop-up-checkbox-accept-terms' name='ec-survey-pop-up-checkbox-accept-terms' value='0' />&nbsp;<label class='ecsi-body-checkbox-label' id='ec-survey-pop-up-body-checkbox-accept-terms-label' for='ec-survey-pop-up-checkbox-accept-terms'><span id='ec-survey-pop-up-body-privacy-link-pre'></span> <a class='ecsi-body-privacy-link' id='ec-survey-pop-up-body-privacy-link' target='_blank'></a> <span id='ec-survey-pop-up-body-privacy-link-post'></span></label> </div>         <div class='ecsi-body-checkbox' id='ec-survey-pop-up-body-checkbox'> <input type='checkbox' class='ecsi-checkbox' id='ec-survey-pop-up-checkbox-do-not-show-again' name='ec-survey-pop-up-checkbox-do-not-show-again' value='0' />&nbsp;<label class='ecsi-body-checkbox-label' id='ec-survey-pop-up-body-checkbox-label' for='ec-survey-pop-up-checkbox-do-not-show-again'></label> </div>         <div class='ecsi-body-cookie-disclaimer' id='ec-survey-pop-up-body-cookie-disclaimer'></div>     </div> </div>",
+            "translatable_texts": {
+                "ec-survey-pop-up-button-close": "Close",
+                "ec-survey-pop-up-title": "Directorate-General for Environment Survey",
+                "ec-survey-pop-up-body-main-text": "Please take a few minutes to participate in our annual survey",
+                "ec-survey-pop-up-body-button-participate-now": "OK",
+                "ec-survey-pop-up-body-button-do-not-participate": "No, thank you",
+                "ec-survey-pop-up-body-checkbox-label": "Do not ask again",
+                "ec-survey-pop-up-body-cookie-disclaimer": "(A cookie will be created so that you do not receive this message again).",
+                "ec-survey-pop-up-body-privacy-link": "Privacy statement",
+                "ec-survey-pop-up-body-privacy-link-pre": "I have read and agree with the",
+                "ec-survey-pop-up-body-privacy-link-post": ""				
+            }
+        },
+        "start_date": "2025-11-24T00:00:00+00:00",
+        "end_date": "2025-12-15T06:36:40+00:00",
+        "trigger_mode": "trigger_mode_1"
+    }
+});

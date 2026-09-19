@@ -1,0 +1,24 @@
+(function ($, Drupal) {
+  'use strict';
+
+  Drupal.behaviors.global = {
+    attach: function(context, settings) {
+
+    }
+  };
+
+  $(document).ready(function() {
+    $("#block-wri-forest-search").append('<div class="search-close">&times;</div>');
+
+    $(".site-search").click(function(e){
+      e.preventDefault();
+      $("#block-wri-forest-search").toggleClass('open');
+    });
+
+    $(".search-close").click(function(e){
+      e.preventDefault();
+      $("#block-wri-forest-search").toggleClass('open');
+    });
+  });
+
+}(jQuery, Drupal));

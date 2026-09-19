@@ -1,0 +1,33 @@
+// Fullscreen mode: Check for set_fullscreen_mode parameter and manage sessionStorage
+let fullscreenMode = false;
+const urlParams = new URLSearchParams(window.location.search || '');
+
+if (urlParams.get('set_fullscreen_mode') === '1') {
+  localStorage.setItem('fullscreen_mode', 'true');
+  fullscreenMode = true;
+} else if (urlParams.get('set_fullscreen_mode') === '0') {
+  localStorage.removeItem('fullscreen_mode');
+  fullscreenMode = false;
+} else {
+  fullscreenMode = localStorage.getItem('fullscreen_mode') === 'true';
+}
+
+// add 'is-fullscreen' class to main id if fullscreen mode is enabled
+if (fullscreenMode) {
+  window.main.classList.add('is-fullscreen');
+  // remove link from logo and prevent Default action
+  document
+    .querySelector('.main-bar-container .logo')
+    .addEventListener('click', (e) => {
+      e.preventDefault();
+    });
+  
+  document.body.addEventListener('click', (e) => {
+    if (
+      (e.target.tagName === 'A' && e.target.rel === 'noopener' || e.target.className === 'name')
+    ) {
+      console.log('Prevented default behavior for anchor tag inside modal');
+      e.preventDefault();
+    }
+  });
+}

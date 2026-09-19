@@ -1,0 +1,378 @@
+jQuery(function($) {
+    
+    // Run methods
+    initSVGImageReplacement();
+    initCarouselMasthead();
+    initCarouselMastheadNav();
+    initCarouselPromote();
+    initNavigationToggles();
+    initTabs();
+    initMasonryGallery();
+    initLightBoxGallery();
+    mainNavBuilder();
+    //initLightBoxPublications();
+    
+    // Initialize global slider accessibility
+    initGlobalSliderAccessibility();
+
+    // Accessibility helper function for Slick sliders
+    function manageSliderAccessibility($slider) {
+        // Function to update tabindex on slides
+        function updateSlideAccessibility() {
+            $slider.find('.slick-slide, .slick-dots li').each(function() {
+                var $slide = $(this);
+                var isVisible = !$slide.attr('aria-hidden') || $slide.attr('aria-hidden') === 'false';
+                
+                // Find all focusable elements in the slide or dot
+                var focusableElements = $slide.find('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"]), [role="button"]');
+                
+                // Also check if the slide itself is focusable
+                if ($slide.is('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"]), [role="button"]')) {
+                    focusableElements = focusableElements.add($slide);
+                }
+                
+                if (isVisible) {
+                    // Make focusable elements accessible
+                    focusableElements.each(function() {
+                        var $el = $(this);
+                        var originalTabindex = $el.data('original-tabindex');
+                        if (originalTabindex !== undefined) {
+                            $el.attr('tabindex', originalTabindex);
+                        } else {
+                            $el.removeAttr('tabindex');
+                        }
+                    });
+                } else {
+                    // Make focusable elements inaccessible
+                    focusableElements.each(function() {
+                        var $el = $(this);
+                        if (!$el.data('original-tabindex')) {
+                            $el.data('original-tabindex', $el.attr('tabindex') || '0');
+                        }
+                        $el.attr('tabindex', '-1');
+                    });
+                }
+            });
+        }
+
+        // Set up event listeners
+        $slider.on('afterChange', updateSlideAccessibility);
+        $slider.on('init', updateSlideAccessibility);
+        
+        // Initial setup if slider is already initialized
+        if ($slider.hasClass('slick-initialized')) {
+            updateSlideAccessibility();
+        }
+    }
+
+    // Apply accessibility management to all slick sliders
+    function initGlobalSliderAccessibility() {
+        // Wait for all sliders to initialize, then apply accessibility
+        setTimeout(function() {
+            $('.slick-initialized').each(function() {
+                manageSliderAccessibility($(this));
+            });
+        }, 100);
+    }
+
+    function mainNavBuilder() {
+      $('#nav-topics > #menu-header-main > li').each(function() {
+        var title = $(this).find('> a').text();
+        var url = $(this).data('url');
+        var subMenu = $(this).find('.header-lower-sub-menu-container .header-lower-sub-menu-container-child > ul');
+        
+        if(subMenu.length > 0) {
+          
+          subMenu.prepend('<li class="header-lower-sub-menu-title"><a href="' + url + '">' + title + ' Home</a></li>');
+          
+        }
+
+      });
+    }
+
+    // Display png instead of svg
+    function initSVGImageReplacement(){
+        if(!Modernizr.svg) {
+          $('img[src*="svg"]').attr('src', function() {
+            return $(this).attr('src').replace('.svg', '.png');
+          });
+        }
+    }
+
+    // Carousel Masthead
+    function initCarouselMasthead() {
+      if(typeof $.fn.slick !== 'undefined') {
+        var $carousel = $('.carousel-masthead');
+        $carousel.slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: true,
+            fade: true,
+            autoplay: true,
+            mobileFirst: true,
+            asNavFor: '.carousel-nav',
+            accessibility: true,
+            focusOnSelect: false,
+            focusOnChange: true
+        });
+        
+        // Apply accessibility management
+        manageSliderAccessibility($carousel);
+      }
+    }
+
+    // Carousel Masthead Nav
+    function initCarouselMastheadNav() {
+      if(typeof $.fn.slick !== 'undefined') {
+        var $carouselNav = $('.carousel-nav');
+        $carouselNav.slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            asNavFor: '.carousel',
+            centerMode: false,
+            variableWidth: true,
+            focusOnSelect: true,
+            mobileFirst: true,
+            autoplay: true,
+            arrows: false,
+            accessibility: true,
+            responsive: [
+                {
+                    breakpoint: 1023,
+                    settings: {
+                        fade: true
+                    }
+                }
+            ]
+        });
+        
+        // Apply accessibility management
+        manageSliderAccessibility($carouselNav);
+      }
+    }
+
+    // Carousel Promote - used on homepage
+    function initCarouselPromote() {
+      if(typeof $.fn.slick !== 'undefined') {
+        var $promoteCarousel = $('.promote-content');
+        $promoteCarousel.slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            adaptiveHeight: true,
+            dots: true,
+            accessibility: true,
+            focusOnSelect: false,
+            focusOnChange: true,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    adaptiveHeight: false
+                },
+                {
+                    breakpoint: 768,
+                    settings: "unslick"
+                }
+            ]
+        });
+        
+        // Apply accessibility management
+        manageSliderAccessibility($promoteCarousel);
+      }
+    }
+
+    // Navigation Toggle Handlers
+    function initNavigationToggles() {
+
+
+        // The click handlers map
+        //  key is the element to bind the onclick event to
+        //  value is the target
+        var clickHandlers = {
+            '#toggle-nav-organisation' : '#nav-organisation',
+            '#toggle-search' : '#search-site',
+            '#toggle-secondary' : '#content-secondary-inner',
+            '#toggle-quicklinks' : '#quicklinks',
+            '#toggle-topics' : '#nav-topics'
+        };
+
+        var activeClass = 'active';
+
+        // Loop through all the click handlers and bind the event
+        $.each(clickHandlers, function(clickHandler, target) {
+
+            $(clickHandler).on('click', function(event) {
+            
+                event.preventDefault();
+
+                var previouslyVisible = $(target).is(':visible');
+                $('.toggle-close').hide();
+
+                // Remove active state from all other menus
+                $.each(clickHandlers, function(clickHandlers2, target2) {
+                    $(clickHandlers2).removeClass(activeClass);
+                });
+
+                if (previouslyVisible === false) {
+                    $(target).show();
+                    $(this).addClass(activeClass);
+                }
+            });
+        });
+
+        // Handles the opening of the mega mobile navigation menu
+        var navTopics = $('#nav-topics');
+
+        navTopics.find("> ul > li > a").on('click', function(event) {
+
+            event.preventDefault();
+
+            if($(this).parent().hasClass('active')) {
+              $('.header-lower-sub-menu-container').hide();
+              $(this).parent().removeClass('active')
+            } else {
+            // Remove active class from all other list items
+              var activeClass = 'active';
+              navTopics.find('> ul > li').removeClass(activeClass);
+              $('.header-lower-sub-menu-container').hide();
+              $(this).parent().addClass(activeClass);
+
+              var subNav = $(this).next('.header-lower-sub-menu-container');
+              subNav.show();
+            }
+
+        });
+    }
+
+    // Display png instead of svg
+    function initTabs(){
+        $('ul.nav-tabs').each(function(){
+        // For each set of tabs, we want to keep track of
+        // which tab is active and it's associated content
+        var $active, $content, $links = $(this).find('a');
+
+        // If the location.hash matches one of the links, use that as the active tab.
+        // If no match is found, use the first link as the initial active tab.
+        $active = $($links.filter('[href="'+location.hash+'"]')[0] || $links[0]);
+        $active.addClass('active');
+
+        $content = $($active[0].hash);
+
+        // Hide the remaining content
+        $links.not($active).each(function () {
+          $(this.hash).hide();
+        });
+
+        // Bind the click event handler
+        $(this).on('click', 'a', function(e){
+          // Make the old tab inactive.
+          $active.removeClass('active');
+          $content.hide();
+
+          // Update the variables with the new link and content
+          $active = $(this);
+          $content = $(this.hash);
+
+          // Make the tab active.
+          $active.addClass('active');
+          $content.show();
+
+          // Prevent the anchor's default click action
+          e.preventDefault();
+        });
+      });
+    }
+
+    // Masonry Gallery
+    function initMasonryGallery() {
+        var $container = $('#masonry-wrapper');
+      	
+      	if(typeof $.fn.imagesLoaded !== 'undefined') {
+          $container.imagesLoaded(function() {
+              $container.masonry({
+                  // options...
+                  itemSelector: 'li'
+              });
+          });
+        }
+    }
+
+    // Lightbox Gallery
+    function initLightBoxGallery() {
+      	if(typeof $.fn.magnificPopup !== 'undefined') {
+        $('#masonry-wrapper').magnificPopup({
+            type: 'image',
+            delegate: 'a',
+            gallery:{
+            enabled:true
+            }
+        });
+        }
+    }
+
+    // Lightbox Publications
+    function initLightBoxPublications() {
+      	if(typeof $.fn.magnificPopup !== 'undefined') {
+        $('#listing-publications').magnificPopup({
+            type: 'image',
+            delegate: '.article-image'
+        });
+        }
+    }  
+  
+  
+    //the following was created by T4
+
+  	// get current section from breadcrumbs
+  	currentSection = jQuery('.breadcrumbs li:nth-child(2) a').attr('href');
+  
+  	//make mega menu active if current section matches mega menu
+
+	jQuery('.nav-topics > ul > li').each(function() { 
+		var navUrl = jQuery(this).find('ul li a').first().attr('href'); 
+		//navUrl = navUrl.replace(/\//g, '');
+		if(navUrl === currentSection) {
+			//jQuery(this).addClass('active');
+		}
+	});
+  
+  	// publication "0 pages" hide
+    if(jQuery('.publication').length > 0) {
+      jQuery('.publication .pages').each(function() {
+        if(jQuery(this).html() == "0 Pages") {
+        	jQuery(this).hide();
+        }
+      });
+    }
+  
+  	//remove Events from breadcrumbs - PSRR-4036
+  	if(jQuery('.breadcrumbs .inner ul li:nth-child(4) a').html() == "Events") { 
+      jQuery('.breadcrumbs .inner ul li:nth-child(4)').hide(); 
+    }
+});
+if(navigator.userAgent.indexOf('Chrome/') !== -1) {
+	os = navigator.userAgent.split('Chrome/');
+	os = os[os.length -1];
+	os = os.split('.');
+	os = os[0];
+	
+	if(os >= 52) {
+
+		jQuery('body').append('<style>@media only screen and (min-width: 690px) { .csscolumns header[role=banner] .nav-topics ul li ul li { display: block !important; } } header[role=banner] .nav-topics ul li ul li { margin-bottom: 0; } </style>' );
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

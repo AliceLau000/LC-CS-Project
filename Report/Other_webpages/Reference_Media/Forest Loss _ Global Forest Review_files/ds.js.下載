@@ -1,0 +1,205 @@
+(function ($, Drupal, drupalSettings) {
+  'use strict';
+
+  Drupal.behaviors.ds_viewport = {
+    attach: function attach(context) {
+      let $context = $(context);
+
+      function browserVersion() {
+        let ua = navigator.userAgent, tem,
+          M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+
+        if(/trident/i.test(M[1])){
+          tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+          return 'IE ' + (tem[1] || '');
+        }
+
+        if(M[1] === 'Chrome'){
+          tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+          if(tem != null) {
+            return tem.slice(1).join(' ').replace('OPR', 'Opera');
+          }
+        }
+
+        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+        if((tem = ua.match(/version\/(\d+)/i)) != null) {
+          M.splice(1, 1, tem[1]);
+        }
+
+        return M[1];
+      }
+
+      function getOS() {
+        if (navigator.appVersion.indexOf("Win") !== -1) {
+          return "windows";
+        }
+
+        if (navigator.appVersion.indexOf("Mac") !== -1) {
+          return "mac";
+        }
+
+        if (navigator.appVersion.indexOf("X11") !== -1) {
+          return "unix";
+        }
+
+        if (navigator.appVersion.indexOf("Linux") !== -1) {
+          return "linux";
+        }
+      }
+
+      function getBrowser() {
+        let sUsrAg = navigator.userAgent;
+
+        if (sUsrAg.indexOf("Firefox") > -1) {
+          return "firefox";
+        } else if (sUsrAg.indexOf("SamsungBrowser") > -1) {
+          return "sinternet";
+        } else if (sUsrAg.indexOf("Opera") > -1 || sUsrAg.indexOf("OPR") > -1) {
+          return "opera";
+        } else if (sUsrAg.indexOf("Trident") > -1) {
+          return "ie";
+        } else if (sUsrAg.indexOf("Edge") > -1) {
+          return "edge";
+        } else if (sUsrAg.indexOf("Chrome") > -1) {
+          return "chrome";
+        } else if (sUsrAg.indexOf("Safari") > -1) {
+          return "safari";
+        } else {
+          return "unknown";
+        }
+      }
+
+      function viewportInfo() {
+        let body = $('body');
+        let current_classes = body.attr('class');
+        let the_width = $(window).width();
+        let the_height = $(window).height();
+
+        current_classes = current_classes.split(" ");
+
+        for (let i = 0; i < current_classes.length; i++) {
+          if(current_classes[i].includes('ds-viewport-')) {
+            body.removeClass(current_classes[i]);
+          }
+        }
+
+        body.addClass('ds-viewport-os-' + getOS());
+        body.addClass('ds-viewport-browser-' + getBrowser() + '-' + browserVersion());
+        body.addClass('ds-viewport-size-' + the_width);
+
+        let info = '<div id="viewport-settings"><ul><li class="system">System: ' + getOS() + ' ' + getBrowser() + ' v' + browserVersion() + '</li><li class="dimensions">Dimension: ' + the_width + ' x ' + the_height + '</li></ul></div>';
+
+        if(drupalSettings.ds.show_viewport_info) {
+          if(body.find('#viewport-settings').length <= 0) {
+            body.append(info);
+          }
+        }
+      }
+
+      viewportInfo();
+      $(window).on('resize', function() {
+        viewportInfo();
+      });
+    }
+  };
+
+  Drupal.behaviors.ds_alt = {
+    attach: function attach(context) {
+      function changeImageAttributes() {
+        /*if ($('form').hasClass('node-form') || $('form').hasClass('node-page-edit-form')) {
+          var i = 0;
+          $('.field--name-field-back-image').each(function () {
+            var altText = $(this).find('.form-item-field-back-image-' + i + '-alt label');
+            var titleText = $(this).find('.form-item-field-back-image-' + i + '-title label');
+            altText.text('Source');
+            titleText.text('Description');
+            i++;
+          });
+
+          var i = 0;
+          $('.field--name-field-graphs table tbody tr').each(function () {
+            for (var i = 0; i < 10; i++) {
+              var altText = $(this).find('.image-widget .js-form-item-field-paragraphs-' + i + '-subform-field-graphs-0-subform-field-single-image-0-alt label');
+              var titleText = $(this).find('.image-widget .js-form-item-field-paragraphs-' + i + '-subform-field-graphs-0-subform-field-single-image-0-title label');
+              altText.text('Source');
+              titleText.text('Description');
+            }
+          });
+
+          var i = 0;
+          $('.field--name-field-paragraphs table tbody tr').each(function () {
+            for (var i = 0; i < 10; i++) {
+              var altText = $(this).find('.image-widget .form-item-field-paragraphs-' + i + '-subform-field-single-image-0-alt label');
+              var titleText = $(this).find('.image-widget .form-item-field-paragraphs-' + i + '-subform-field-single-image-0-title label');
+              altText.text('Source');
+              titleText.text('Description');
+            }
+          });
+        }*/
+      }
+
+      $(document).ajaxComplete(function () {
+        changeImageAttributes();
+      });
+
+      changeImageAttributes();
+    }
+  };
+})(jQuery, Drupal, drupalSettings);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+  let active = false;
+
+  const lazyLoad = function() {
+    if (active === false) {
+      active = true;
+
+      setTimeout(function() {
+        lazyImages.forEach(function(lazyImage) {
+          if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
+            lazyImage.src = lazyImage.dataset.src;
+            lazyImage.srcset = lazyImage.dataset.srcset;
+            lazyImage.classList.remove("lazy");
+
+            lazyImages = lazyImages.filter(function(image) {
+              return image !== lazyImage;
+            });
+
+            if (lazyImages.length === 0) {
+              document.removeEventListener("scroll", lazyLoad);
+              window.removeEventListener("resize", lazyLoad);
+              window.removeEventListener("orientationchange", lazyLoad);
+            }
+          }
+        });
+
+        active = false;
+      }, 200);
+    }
+  };
+
+  document.addEventListener("scroll", lazyLoad);
+  window.addEventListener("resize", lazyLoad);
+  window.addEventListener("orientationchange", lazyLoad);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  let lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-background"));
+
+  if ("IntersectionObserver" in window && "IntersectionObserverEntry" in window && "intersectionRatio" in window.IntersectionObserverEntry.prototype) {
+    let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          lazyBackgroundObserver.unobserve(entry.target);
+        }
+      });
+    });
+
+    lazyBackgrounds.forEach(function(lazyBackground) {
+      lazyBackgroundObserver.observe(lazyBackground);
+    });
+  }
+});

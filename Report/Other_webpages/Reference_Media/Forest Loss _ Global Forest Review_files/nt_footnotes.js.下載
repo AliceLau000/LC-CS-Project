@@ -1,0 +1,127 @@
+jQuery(document).ready(function ($) {
+    $(document).ajaxComplete(function () {
+        $("#footnotes-container").empty();
+        $("sup.custom-sup").remove();
+        nt_footnotes();
+    });
+
+
+  function convertUrlsToLinks(htmlString) {
+    // Create a DOM parser
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+
+    // Function to replace URLs with <a> tags in a text node
+    const replaceUrlsWithLinks = (text) => {
+        const urlRegex = /(?<!href=["'])https?:\/\/(?![^<]*<\/a>)[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/gi;
+        return text.replace(urlRegex, (url) => `<a href="${url}">${url}</a>`);
+    };
+      
+
+    // Iterate over all text nodes in the document
+    const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    while (node = walker.nextNode()) {
+      const parentNodeName = node.parentNode.nodeName.toLowerCase();
+      // Skip if the text node is already inside an <a> tag
+      if (parentNodeName === 'a') continue;
+
+      // Replace URLs in the text node with <a> tags
+      const newNodeHtml = replaceUrlsWithLinks(node.nodeValue);
+      // Replace the current text node with new HTML, which includes <a> tags
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = newNodeHtml;
+      while (tempDiv.firstChild) {
+        node.parentNode.insertBefore(tempDiv.firstChild, node);
+      }
+      node.parentNode.removeChild(node);
+    }
+
+    return doc.body.innerHTML;
+  }
+
+  function nt_footnotes() {
+        let index = 1;
+        let f = '';
+
+        $('body h3').each(function () {
+            $(this).html(_.unescape($(this).html()));
+        });
+
+        $('body h4').each(function () {
+            $(this).html(_.unescape($(this).html()));
+        });
+
+        $('footnotes').each(function () {
+
+            let otext = $(this).text().replace(/(<([^>]+)>)/gi, "");
+            let htext = $(this);
+
+            if (htext.html().includes('<a href="')) {
+
+                f += '<li class="footnote" id="footnote-' + index + '"><a class="footnote-label" href="#see-footnote-' + index + '"><span class="footnote-id">' + index + '</span>.</a> ' + htext.html() + '</li>';
+            } else if (htext.html().includes('a href="')) {
+                f += '<li class="footnote" id="footnote-' + index + '"><a class="footnote-label" href="#see-footnote-' + index + '"><span class="footnote-id">' + index + '</span>.</a> ' + _.unescape(htext.text()) + '</li>';
+            } else {
+                let regex = new RegExp('[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&\(\)//=]*)', 'igm');
+
+
+                htext.html(convertUrlsToLinks(htext.html()));
+                console.log(convertUrlsToLinks(htext.html()));
+                var html = htext.html();
+                if (!html || html == '&nbsp;') {
+                  $(htext).each(function () {
+                    html = $(this).attr('data-text');
+
+                    html = convertUrlsToLinks(html);
+
+                  })
+                }
+                f += '<li class="footnote" id="footnote-' + index + '"><a class="footnote-label" href="#see-footnote-' + index + '"><span class="footnote-id">' + index + '</span>.</a> ' + html + '</li>';
+            }
+
+            let a = '<sup class="custom-sup"><a class="see-footnote" id="see-footnote-' + index + '" title="' + otext + '" href="#footnote-' + index + '"><span class="footnote-content-id">' + index + '</span></a></sup>';
+            $(this).before(a);
+            //$(this).remove();
+            index++;
+        });
+
+        if (f !== '') {
+            $('#footnotes-container').append('<ul class="footnotes">' + f + '</ul>');
+        }
+
+        $('#footnotes-container span.custom-tooltip').each(function () {
+            $(this).find('.tooltiptext').remove();
+            $(this).removeAttr('class');
+            $(this).contents().unwrap();
+        });
+
+        $('.footnotes li a').each(function () {
+            $(this).attr('target', '_blank');
+        });
+
+
+        $('.footnote-label').each(function () {
+            $(this).removeAttr('target');
+        });
+    }
+
+    nt_footnotes();
+});
+
+(function ($, Drupal) {
+
+    'use strict';
+    Drupal.behaviors.nt_footnotes = {
+        attach: function (context, settings) {
+
+        }
+    }
+})(jQuery, Drupal);
+
+
+
+
+
+
+

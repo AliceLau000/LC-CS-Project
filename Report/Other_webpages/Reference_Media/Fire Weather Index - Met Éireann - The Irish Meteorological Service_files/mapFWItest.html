@@ -1,0 +1,198 @@
+
+<!-- saved from url=(0052)https://clidata.met.ie/cli/agmet/FWI/mapFWItest.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Fire Weather Index</title>
+<link href="./bootstrap.css" rel="stylesheet">
+<link href="https://devcdn.metweb.ie/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="./met(1).css" rel="stylesheet">
+
+<script type="text/javascript">
+function showGraph(gr) {
+var myWindow=window.open(gr.src,'targetWindow','toolbar=no,location=no,urlbar=no,status=no,menubar=no,titlebar=no,scrollbars=no,status=yes,directories=0,width=685,height=970'); myWindow.focus();}
+</script>
+<style>
+.Fire {height:130px; width:130px }
+.Fire#map1 { position: absolute; top:290px;left:570px}
+.Fire#map2 { position: absolute; top:460px;left:150px}
+.Fire#map3 { position: absolute; top:680px;left:350px}
+.Fire#map4 { position: absolute; top:600px;left:550px}
+.Fire#map5 { position: absolute; top:320px;left:280px}
+.Fire#map6 { position: absolute; top:650px;left:30px}
+.Fire#map7 { position: absolute; top:120px;left:50px}
+.Fire#map8 { position: absolute; top:185px;left:410px}
+.Fire#map9 { position: absolute; top:10px;left:350px}
+.Fire#map10 { position: absolute; top:320px;left:430px}
+.Fire#map11 { position: absolute; top:460px;left:300px}
+.Fire#map12 { position: absolute; top:330px;left:10px}
+.Fire#map13 { position: absolute; top:460px;left:440px}
+.Fire#map14 { position: absolute; top:255px;left:145px}
+.Fire#map15 { position: absolute; top:425px;left:575px}
+.Fire#map16 { position: absolute; top:730px;left:180px}
+.Fire#map17 { position: absolute; top:595px;left:200px}
+.Country {position: absolute; top:5px;left:2px; height:800px; width:730px; z-index:-1; }
+
+/* met.ie font specifications.
+
+*Main body content font.*
+color: #434343;
+font-family: 'Roboto', sans-serif;
+font-size: 16px;
+font-weight: 400;
+
+*H1*
+font-size: 24px;
+font-family: 'Lato', sans-serif;
+text-transform: uppercase;
+color: #00305f;
+font-weight: 400;
+
+*H2*
+font-size: 22px;
+font-family: 'Lato', sans-serif;
+text-transform: uppercase;
+color: #00305f;
+font-weight: 400;
+
+*H3*
+font-size: 22px;
+font-family: 'Roboto', sans-serif;
+color: #00305f;
+font-weight: 400;
+
+*Small font for graphs etc.*
+font-family: 'Roboto Condensed', sans-serif !important;
+font-size: 12px;*/
+
+
+body {
+  height: 29.7cm;
+  width: 19cm;
+  font-family: Arial;
+  /*font-size: 14px;*/
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px
+}
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 1px;
+  padding: 1px;
+  width: 130px;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+</style>
+</head>
+<body>
+
+<h3>Fire Weather Index</h3>
+
+<div id="modified" style="margin-top:-15px;font-size:80%">
+<p>Click on images to resize </p></div>
+
+<div id="modified" style="margin-top:-15px; font-size:70%">
+
+<script type="text/javascript">
+
+function makeArray() {
+
+for (i = 0; i < makeArray.arguments.length; i++)
+
+  this[i + 1] = makeArray.arguments[i];
+
+}
+
+ 
+
+var modifiedMonth = new makeArray('January','Febuary','March','April',
+
+                                  'May','June','July','August','September',
+
+                                  'October','November','December');
+
+ 
+
+var modifiedDate = new Date(document.lastModified);
+
+ 
+
+function modifiedDay(day) {
+
+      if (day == 0) return 'Sunday';
+
+else  if (day == 1) return 'Monday';
+
+else  if (day == 2) return 'Tuesday';
+
+else  if (day == 3) return 'Wednesday';
+
+else  if (day == 4) return 'Thursday';
+
+else  if (day == 5) return 'Friday';
+
+else                return 'Saturday'; }
+
+ 
+
+function getCorrectedYear(year) {
+
+    year = year - 0;
+
+    if (year < 70) return (2000 + year);
+
+    if (year < 1900) return (1900 + year);
+
+    return year;
+
+}
+
+
+document.write('Page last modified on ' + modifiedDay(modifiedDate.getDay()) + ', ' +
+
+                                    modifiedDate.getDate() + ' ' +
+
+                                    modifiedMonth[modifiedDate.getMonth() + 1] + ' ' +
+
+                                    getCorrectedYear(modifiedDate.getFullYear()))+ '    ' ;
+
+
+</script>Page last modified on Wednesday, 26 Febuary 2025   
+
+</div>
+
+
+<div id="Firemap">
+<img src="./532_Fire.jpg" class="Fire" border="1" id="map1" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./518_Fire.jpg" class="Fire" border="1" id="map2" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./3904_Fire.jpg" class="Fire" border="1" id="map3" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./1775_Fire.jpg" class="Fire" border="1" id="map4" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./1875_Fire.jpg" class="Fire" border="1" id="map5" alt="Fire" onclick="showGraph(this);return true;">
+<!--<img src="./2275_Fire.jpg" class="Fire" border="1" id="map6" onclick="showGraph(this);return true;">-->
+<img src="./2375_Fire.jpg" class="Fire" border="1" id="map7" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./675_Fire.jpg" class="Fire" border="1" id="map8" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./1575_Fire.jpg" class="Fire" border="1" id="map9" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./875_Fire.jpg" class="Fire" border="1" id="map10" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./1475_Fire.jpg" class="Fire" border="1" id="map11" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./275_Fire.jpg" class="Fire" border="1" id="map12" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./375_Fire.jpg" class="Fire" border="1" id="map13" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./1175_Fire.jpg" class="Fire" border="1" id="map14" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./3723_Fire.jpg" class="Fire" border="1" id="map15" alt="Fire" onclick="showGraph(this);return true;">
+<!--<img src="./775_Fire.jpg" class="Fire" border="1" id="map16" onclick="showGraph(this);return true;">-->
+<img src="./575_Fire.jpg" class="Fire" border="1" id="map17" alt="Fire" onclick="showGraph(this);return true;">
+<img src="./iremap.png" class="Country" alt="Fire Graph">
+</div>
+
+<div id="modified" style="margin-top:810px;font-size:80%">
+<p> These meteograms are updated every day of the year. In Ireland there can be a high risk of fires from the end of February until October. Five danger classes were chosen ranging from Very Low to Extreme. The values were chosen to allow extreme conditions to exist on 2-3% of days during each month over the 35 year period for which the fire model was run. Similar methods were employed to calculate ISI and FFMC danger classes. </p>
+<p> The Department of Agriculture, Food and the Marine issue fire warnings/fire danger notices based on fire weather data courtesy of the European Commission Copernicus System, ECMWF and Met Éireann. See <strong><a href="https://www.gov.ie/en/publication/01773-fire-management/#fire-danger-notices">The Latest Fire Danger Notice</a></strong> and further <strong><a href="https://www.gov.ie/en/publication/01773-fire-management/" target="_blank">Wildfire Prevention Information</a></strong>.</p> 
+<p>For more information contact: <strong><a href="mailto: forecasts@met.ie">forecasts@met.ie</a></strong>.</p></div>
+
+
+</body></html>

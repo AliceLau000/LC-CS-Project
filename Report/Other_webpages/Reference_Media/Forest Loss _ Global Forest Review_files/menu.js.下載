@@ -1,0 +1,23 @@
+jQuery(document).ready(function ($) {
+  $(".dropdown-menu:not(.we-mega-menu-group)").hover(
+    function () {
+      $(this).find(".we-mega-menu-submenu").addClass('veryVisible').css('visibility', 'visible !important');
+    }, function () {
+      $(this).find(".we-mega-menu-submenu").removeClass('veryVisible').css('visibility', 'hidden !important');
+    }
+  );
+
+  $(window).resize(function () {
+    if ($(window).width() <= 991) {
+      $(".menu--social-media-and-search").prependTo(".navbar-we-mega-menu");
+    } else {
+      $(".navbar-we-mega-menu .menu--social-media-and-search").prependTo("#block-socialmediaandsearch-2-menu");
+    }
+  });
+
+  if ($(window).width() <= 991) {
+    $(".menu--social-media-and-search").prependTo(".navbar-we-mega-menu");
+  } else {
+    $(".navbar-we-mega-menu .menu--social-media-and-search").prependTo("#block-socialmediaandsearch-2-menu");
+  }
+});

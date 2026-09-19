@@ -1,0 +1,63 @@
+(function ($, Drupal, drupalSettings) {
+  'use strict';
+
+  Drupal.behaviors.glossary = {
+    attach: function (context, settings) {
+      let glossary = $('#glossary-terms');
+      let data = '';
+      if (glossary.length > 0) {
+        data = JSON.parse(glossary.text());
+      }
+
+      $('gl', context).each(function () {
+
+        let html = '';
+        let text = $(this).text();
+        let tempText = text.replace(/[^a-zA-Z0-9\s\-'&]/g, "");
+
+        $.each(data, function (i, item) {
+          console.log('sasasa');
+          $.each(item, function (t, term) {
+            console.log('sasasa1');
+            if (term.name !== null && term.description !== null && term.name.toLowerCase() === tempText.toLowerCase()) {
+              html = '<span class="custom-tooltip">' + text +
+                '<span class="tooltiptext" style="display: none;"><span class="tooltiptitle">' + i +
+                '</span><span class="tooltipdescription">' + term.description + '</span></span></span>';
+            }
+          });
+        });
+
+        if (html === '') {
+          html = text;
+        }
+
+        $(this).after(html);
+        $(this).remove();
+
+      });
+    }
+  }
+
+  Drupal.behaviors.ds_glossary = {
+    attach: function attach(context) {
+      console.log('gloaaaatach called');
+      $('.custom-tooltip', context).each(function () {
+        $(this).on({
+          mouseenter: function () {
+            $(this).find('.tooltiptext').show();
+            if ($(window).outerWidth() <= 767) {
+              var offset = $(this).find('.tooltiptext').offset();
+              if (offset.left - 15 > 0) {
+                var final_offset = offset.left - 15
+              }
+              $(this).find('.tooltiptext').css('left', '-' + final_offset + 'px');
+            }
+          },
+          mouseleave: function () {
+            $(this).find('.tooltiptext').hide();
+          }
+        });
+      });
+    }
+  }
+})(jQuery, Drupal);

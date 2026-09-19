@@ -1,0 +1,45 @@
+//*** Functions for the front-end search page ***/
+// Setup and bind the function to fire when you click either the refinement tags
+$(document).ready(function() {
+    $(".ecl-tag").click(function(event) {
+        event.preventDefault();
+        submitFacets($(this).attr("data-facetID"));
+    });
+});
+
+// Setup and bind the function to fire when you click a related Topic tag
+$(document).ready(function() {
+    $(".relatedTopic").click(function(event) {
+        event.preventDefault();
+        if($(this).attr("data-loading") == "false") {
+            transformClickedTag($(this));
+            displayLoadingModal($(this).attr("data-topicTypeName"));
+            submitSearch($(this).attr("data-topicName"));
+        }
+    });
+});
+
+
+
+function submitFacets(facetID) {
+    $(".ecl-checkbox__input").prop("checked", false);
+    $("#" + facetID).prop("checked", true);
+    $("#refine-search-form").submit();
+}
+
+function submitSearch(topicName) {
+    $("#searchTerm").val(topicName);
+    $("#search-form-id").submit();
+}
+
+function transformClickedTag(tag) {
+    tag.attr("data-loading", "true");
+    tag.removeClass(["ecl-items-tag-clickable", "relatedTopic"]);
+    tag.addClass("ecl-items-tag-loading");
+}
+
+function displayLoadingModal(modalID) {
+    modalObject = $("#loading-modal-" + modalID);
+    modalObject.attr("style", "display: flex !important;");
+    modalObject.fadeIn();
+}

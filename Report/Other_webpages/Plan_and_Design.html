@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <link href = "Decoration.css" rel = "stylesheet">
+        <meta name = "Description" content = "This is my plan and design">
+    </head>
+    <body>
+        <ul class="fix_nav">
+            <li><a href="../index.html">Brief</a></li>
+            <li><a href="Investigation.html">Investigation</a></li>
+            <li><a href="Plan_and_Design.html">Plan & Design</a></li>
+            <li><a href="Create.html">Create</a></li>
+            <li><a href="Evaluation.html">Evaluation</a></li>
+            <li><a href="Reference.html">Reference</a></li>
+            <li><a href="Word_Count.html">Word Count</a></li>
+        </ul>
+        <div class="container">
+            <div class="left_sidebar">
+                
+            </div>
+            <div class="main_content">
+                <h1 class="section_title">3. Plan and Design</h1>
+                <h3 class="section_small_title">3.1 Design Objectives</h3>
+                <p>My project is a wildfire risk and spread simulation system:</p>
+                <ol>
+                    <li>Micro:bit collects temperature and light intensity readings using its internal sensors.</li>
+                    <li>Pressing button A records the readings and saves them automatically to a CSV file using the datalogger extension.</li>
+                    <li>The micro:bit displays a fire risk icon on its screen based on the temperature and light intensity values.</li>
+                    <li>The simulation model in python reads the CSV data, applies a fire probability algorithm, and updates a grid-based forest with fire spreading from tree to tree.</li>
+                    <li>The model shows an adaptive sprinkler system that activates when fire is high, reduces fire spread probability algorithm and produces a burn rate graph to visualise the number of trees burned over time.</li>
+                </ol>
+                <h3 class="section_small_title">3.2 Design Options & Justification</h3>
+                <p style="margin-bottom:10px;">I listed out my design choices and why I chose it.</p>
+                <table style="margin-left: auto; margin-right: auto; margin-top: 5px;">
+                    <tr>
+                        <th>Embedded System Options</th>
+                        <th></th>
+                        <th>Reason</th>
+                    </tr>
+                    <tr>
+                        <td>Micro:bit V2</td>
+                        <td>✅</td>
+                        <td>accessible, has built-in sensors, datalogger extension, easier to program and require less complex hardware setup</td>
+                    </tr>
+                    <tr>
+                        <td>Arduino, Raspberry Pi</td>
+                        <td>❌</td>
+                        <td>Arduino system requires additional wiring and external components. Raspberry Pi is more suitable for advance computing tasks</td>
+                    </tr>
+                    <tr>
+                        <th>Input sensors choices</th>
+                        <th></th>
+                        <th>Reason</th>
+                    </tr>
+                    <tr>
+                        <td>Internal Temperature & Light Intensity Sensor</td>
+                        <td>✅</td>
+                        <td>makes the system simpler to set up without external wiring</td>
+                    </tr>
+                    <tr>
+                        <td>External Temperature & Light Intensity Sensor</td>
+                        <td>❌</td>
+                        <td>need external wiring</td>
+                    </tr>
+                    <tr>
+                        <th>Input Options</th>
+                        <th></th>
+                        <th>Reason</th>
+                    </tr>
+                    <tr>
+                        <td>Analogue: Temperature, Light intensity</td>
+                        <td>✅</td>
+                        <td>important factors that influence fire risk and spread behavior</td>
+                    </tr>
+                    <tr>
+                        <td>Digital: Button A</td>
+                        <td>✅</td>
+                        <td>used to trigger to record and store sensor data, make my system more user-friendly</td>
+                    </tr>
+                    <tr>
+                        <th>Data collection method</th>
+                        <th></th>
+                        <th>Reason</th>
+                    </tr>
+                    <tr>
+                        <td>Datalogger extension in makecode</td>
+                        <td>✅</td>
+                        <td>automatically store readings in a csv file on the device</td>
+                    </tr>
+                    <tr>
+                        <td>Serial</td>
+                        <td>❌</td>
+                        <td>data loss can happen if the timing between device and computer is not properly synchronised</td>
+                    </tr>
+                    <tr>
+                        <th>Language</th>
+                        <th></th>
+                        <th>Reason</th>
+                    </tr>
+                    <tr>
+                        <td>Python</td>
+                        <td>✅</td>
+                        <td>has a lot of useful libraries such as pandas and matplotlib, making data processing and visualisation easier</td>
+                    </tr>
+                    <tr>
+                        <th>Data analysis</th>
+                        <th></th>
+                        <th>Reason</th>
+                    </tr>
+                    <tr>
+                        <td>Pandas</td>
+                        <td>✅</td>
+                        <td>has built-in functions for reading, filtering and analysing data</td>
+                    </tr>
+                    <tr>
+                        <td>CSV file storage</td>
+                        <td>✅</td>
+                        <td>easy to export from datalogger and can directly read by pandas</td>
+                    </tr>
+                    <tr>
+                        <td>Numpy</td>
+                        <td>❌</td>
+                        <td>Pandas can handle CSV data easily and work with matplotlib</td>
+                    </tr>
+                    <tr>
+                        <th>Modelling</th>
+                        <th></th>
+                        <th>Reason</th>
+                    </tr>
+                    <tr>
+                        <td>grid-based forest representation</td>
+                        <td>✅</td>
+                        <td>easier to visualise fire spread </td>
+                    </tr>
+                    <tr>
+                        <td>Use average light and average temperature values</td>
+                        <td>✅</td>
+                        <td>so my model use real sensor data without complicating my project</td>
+                    </tr>
+                    <tr>
+                        <td>Adaptive sprinkler system that slows down burn rate</td>
+                        <td>✅</td>
+                        <td>show how my system can respond to high fire risk by reducing burn rate during the simulation</td>
+                    </tr>
+                    <tr>
+                        <td>Burn rate graph</td>
+                        <td>✅</td>
+                        <td>visualise how quickly trees are burning during the simulation</td>
+                    </tr>
+                </table>
+                <h3 class="section_small_title">3.3 Stakeholders and their needs</h3>
+                <p style="margin-bottom: 5px;">I made a mindmap to break down all stakeholders, what I should do regarding to their needs.</p>
+                <img class="center_img" src="Plan_and_Design_Media/Plan_And_Design_Stakeholders_And_Needs.png" alt="# Breakdown of all stakeholders and their needs" width="100%">
+                <h3 class="section_small_title">3.4 Technologies that I am using</h3>
+                <table style="margin-left: auto; margin-right: auto;">
+                    <tr>
+                        <th style="width: 20%">Hardware</th>
+                        <th>Role</th>
+                    </tr>
+                    <tr>
+                        <td>BBC Micro:bit V2</td>
+                        <td>Collects temperature and light readings, display fire risk icons</td>
+                    </tr>
+                    <tr>
+                        <td>USB cable</td>
+                        <td>Connects Micro:bit to computer for programming and data transfer</td>
+                    </tr>
+                    <tr>
+                        <td>Computer</td>
+                        <td>Runs python simulation, read CSV files, visualises forest grid and burn rate graph</td>
+                    </tr>
+                    <tr>
+                        <td>Lamp, Radiator</td>
+                        <td>Allows variable temperature and light for testing</td>
+                    </tr>
+                </table>
+                <table  style="margin-left: auto; margin-right: auto; width: 90%;">
+                    <tr>
+                        <th style="width: 20%">Software</th>
+                        <th>Role</th>
+                    </tr>
+                    <tr>
+                        <td>Visual Studio Code</td>
+                        <td>Programming environment for writing and running Python simulation code</td>
+                    </tr>
+                    <tr>
+                        <td>Python 3</td>
+                        <td>Main programming language used to build the wildfire simulation model</td>
+                    </tr>
+                    <tr>
+                        <td>MakeCode</td>
+                        <td>Programs the micro:bit to collect temperature and light data, store it in csv using the datalogger, and display fire risk icons</td>
+                    </tr>
+                    <tr>
+                        <td>Pandas Library</td>
+                        <td>Used to read csv data collected from the micro:bit</td>
+                    </tr>
+                    <tr>
+                        <td>Matplotlib Library</td>
+                        <td>Visualise simulation results (the burn rate graph)</td>
+                    </tr>
+                    <tr>
+                        <td>IPython/IPython.display</td>
+                        <td>Display simulation outputs and update the forest grid visualisation</td>
+                    </tr>
+                    <tr>
+                        <td>ipykernel</td>
+                        <td>Enable jupyter kernel execution in VS Code for running simulation code</td>
+                    </tr>
+                    <tr>
+                        <td>ANSI Escape codes</td>
+                        <td>Add colour formatting to the forest simulation display</td>
+                    </tr>
+                    <tr>
+                        <td>random module</td>
+                        <td>Introduce probabilistic fire behaviour in the model</td>
+                    </tr>
+                    <tr>
+                        <td>time module</td>
+                        <td>Control simulation speed</td>
+                    </tr>
+                </table>
+                <h3 class="section_small_title">3.5 System Architecture</h3>
+                <img class="center_img" src="Plan_and_Design_Media/Plan_And_Design_System_Architecture.png" alt="# My System Architecture" width="80%">
+                <h3 class="section_small_title">3.6 Embedded System Logic</h3>
+                <img class="center_img" src="Plan_and_Design_Media/Embedded_System_Flowchart.png" width="60%">
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="#" style="text-decoration: none; font-family: fantasy; color: #555;">↑ Return to Top of Section ↑</a>
+                </div>
+            </div>
+            <div class="right_sidebar">
+                
+            </div>
+        </div>
+    </body>
+</html>
